@@ -18,13 +18,14 @@
     @livewireStyles
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="pt-3">
         <header class="container">
             <img src="assets/logo.png" alt="logo" class="logo">
         </header>
         <main class="py-4">
             @yield('content')
         </main>
+    @yield('notifications')
     </div>
     @livewireScripts
 </body>

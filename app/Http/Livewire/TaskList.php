@@ -7,8 +7,8 @@ use App\Models\Task;
 
 class TaskList extends Component
 {
-    //protected $listeners = ['taskCompleted' => 'refreshTasks'];
     public $tasks;
+    public $taskName = '';
 
     public function mount()
     {
@@ -18,6 +18,23 @@ class TaskList extends Component
     public function render()
     {
         return view('livewire.task-list');
+    }
+
+    public function create() {
+
+        $this->validate([
+            'taskName' => 'required|string|max:255',
+        ]);
+
+
+        $task = new Task;
+        $task->name = $this->taskName;
+       
+        if(!$task->save()) {
+
+        }
+
+        $this->tasks = Task::all();
     }
 
     public function completeTask($taskId)
@@ -30,10 +47,12 @@ class TaskList extends Component
         if ($task->completed) {
             $task->completed = false;
             $task->save();
+            $this->emit('taskIncomplete');
         }
         else {
             $task->completed = true;
             $task->save();
+            $this->emit('taskEvent','taskCompleted');
         }
 
         $this->tasks = Task::all();
