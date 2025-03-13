@@ -6,3 +6,31 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+body {
+    background-color: #ededed;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    background-color: white;;
+
+    &.list-group {
+        @extend .p-3;
+        border: 2px solid #dbdbdb;
+
+        li { 
+            background-color: white;
+            border-width: 0 0 3px 0;
+            border-color: #ededed;
+
+            &.task {
+                &.completed {
+                    text-decoration: line-through;
+                }
+            }
+        }
+    }
+}
