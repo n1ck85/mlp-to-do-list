@@ -9,6 +9,6 @@ class Tasks extends Controller
 {
     public function index()
     {
-        return view('partials.tasks');
+        return view('content.main');
     }
 }

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MLP Task List') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -27,6 +27,9 @@
         </main>
     @yield('notifications')
     </div>
+    <footer class="container text-center">
+        <p>&copy; {{ date('Y') }} All Rights Reserved.</p>
+    </footer>
     @livewireScripts
 </body>
 </html>

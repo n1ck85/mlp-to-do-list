@@ -8,7 +8,8 @@ use App\Models\Task;
 class TaskList extends Component
 {
     public $tasks;
-    public $taskName = '';
+
+    protected $listeners = ['refreshTaskList' => 'refreshTasks'];
 
     public function mount()
     {
@@ -20,34 +21,22 @@ class TaskList extends Component
         return view('livewire.task-list');
     }
 
-    public function create() {
-
-        $this->validate([
-            'taskName' => 'required|string|max:255',
-        ]);
-
-
-        $task = new Task;
-        $task->name = $this->taskName;
-       
-        if(!$task->save()) {
-
-        }
-
+    public function refreshTasks()
+    {
         $this->tasks = Task::all();
     }
-
+    
     public function completeTask($taskId)
     {
         $task = Task::find($taskId);
         if(!$task) {
-            dd('Task not found');
+            $this->emit('taskEvent', 'error');
         }
 
         if ($task->completed) {
             $task->completed = false;
             $task->save();
-            $this->emit('taskIncomplete');
+            $this->emit('taskEvent', 'taskIncomplete');
         }
         else {
             $task->completed = true;
@@ -55,28 +44,17 @@ class TaskList extends Component
             $this->emit('taskEvent','taskCompleted');
         }
 
-        $this->tasks = Task::all();
+        $this->refreshTasks();
     }
 
     public function deleteTask($id)
     {
         if(Task::destroy($id)) {
-            $this->tasks = Task::all();
+            $this->emit('taskEvent','taskDeleted');
+            $this->refreshTasks();
         }
-        else {}
-    }
-
-    // public function confirmDeleteTask()
-    // {
-    //     Task::find($this->selectedTaskId)->delete();
-    //     $this->tasks = Task::all();
-    //     $this->selectedTaskId = null;
-    //     $this->confirmingDelete = false;
-    // }
-
-    // public function cancelDeleteTask()
-    // {
-    //     $this->selectedTaskId = null;
-    //     $this->confirmingDelete = false;
-    // }
+        else {
+            $this->emit('taskEvent','error');
+        }
+    }    
 }
