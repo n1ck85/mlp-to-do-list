@@ -14,9 +14,4 @@ class Task extends Model
         'name',
         'completed',
     ];
-
-    public function list() : Collection
-    {
-        return Task::all();
-    }
 }

@@ -2,7 +2,7 @@ document.addEventListener('livewire:load', function () {
     let notification = document.getElementById('notification');
     let notificationTimer;
 
-    Livewire.on('taskEvent', function (event) { console.log(event);
+    Livewire.on('taskEvent', function (event) {
         
         // Clear the previous timer if it exists
         if (notificationTimer) {
